@@ -36,6 +36,8 @@ registry.redhat.io/openshift-service-mesh/pilot-rhel8:1.0.1
 registry.redhat.io/openshift-service-mesh/prometheus-rhel8:1.0.1
 registry.redhat.io/openshift-service-mesh/proxyv2-rhel8:1.0.1
 registry.redhat.io/openshift-service-mesh/sidecar-injector-rhel8:1.0.1
+registry.redhat.io/openshift4/ose-elasticsearch-operator:latest   
+registry.redhat.io/openshift4/ose-logging-elasticsearch5:latest   
 )
 
 for image in ${images[@]}; do
