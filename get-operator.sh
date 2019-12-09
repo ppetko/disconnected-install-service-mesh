@@ -12,6 +12,13 @@ function panic(){
     exit 1
 }
 
+if [ "x$(which jq)" == "x" ]; then
+    panic "Missing jq"
+fi
+
+if [ $# -lt 2 ]; then
+    panic  "Usage: $0 NAMESPACE PACKAGE"
+fi
 
 PKG_NAMESPACE=$1
 PKG_NAME=$2

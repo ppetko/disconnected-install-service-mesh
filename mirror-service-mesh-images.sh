@@ -1,5 +1,22 @@
 #!/bin/bash 
 
+DATE=$(date +%Y-%m-%d-%H:%M:%S)
+
+function log(){
+    echo "$DATE INFO $@"
+    return 0
+}
+
+function panic(){
+    echo "$DATE ERROR $@"
+    exit 1
+}
+
+if [ $# -lt 1 ]; then
+    panic  "Usage: $0 Registry URL"
+fi
+
+REGISTRY=$1
 
 images=(
 registry.redhat.io/distributed-tracing/jaeger-all-in-one-rhel7:1.13.1
@@ -23,6 +40,6 @@ registry.redhat.io/openshift-service-mesh/sidecar-injector-rhel8:1.0.1
 
 for image in ${images[@]}; do
 	src=$image
-	dst=registry.example.com/${image#*/}
-	echo "skopeo copy --format=v2s2 docker://$src docker://$dst"
+	dst=${REGISTRY}/${image#*/}
+	skopeo copy --format=v2s2 docker://$src docker://$dst
 done
