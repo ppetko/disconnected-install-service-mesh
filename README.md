@@ -34,4 +34,27 @@ oc get packagemanifest -n openshift-marketplace
 
 ```
 
+### ServiceMeshMemberRoll
+* The Service Mesh operator has installed a control plane configured for multitenancy. This installation reduces the scope of the control plane to only those projects/namespaces listed in a ServiceMeshMemberRoll.
+* Create a ServiceMeshMemberRoll resource with the project/namespaces you wish to be part of the mesh. This ServiceMeshMemberRoll is required to be named default and exist in the same namespace where the ServiceMeshControlPlane resource resides (ie: istio-system).
 
+```
+echo "apiVersion: maistra.io/v1
+kind: ServiceMeshMemberRoll
+metadata:
+  name: default
+spec:
+  members:
+  # a list of projects joined into the service mesh
+  - mesh-tutorial
+" > service-mesh-roll.yaml
+```
+
+```
+$ oc apply -f service-mesh-roll.yaml -n istio-system
+```
+
+### Update Security Context Contraints
+```
+$ oc adm policy add-role-to-user edit YOURUSER -n istio-system
+```
