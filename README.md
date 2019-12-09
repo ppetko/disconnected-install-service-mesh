@@ -13,6 +13,7 @@ $ oc patch OperatorHub cluster --type json \
 ./get-operator.sh redhat-operators elasticsearch-operator
 ./get-operator.sh redhat-operators kiali-ossm
 ./get-operator.sh redhat-operators jaeger-product
+./get-operator.sh redhat-operators servicemeshoperator
 
 ```
 
