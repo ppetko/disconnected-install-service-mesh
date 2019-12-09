@@ -21,8 +21,8 @@ REGISTRY=$1
 images=(
 registry.redhat.io/distributed-tracing/jaeger-all-in-one-rhel7:1.13.1
 registry.redhat.io/distributed-tracing/jaeger-rhel7-operator:1.13.1
-registry.redhat.io/openshift-service-mesh/kiali-rhel7-operator:1.0.6
-registry.redhat.io/openshift-service-mesh/kiali-rhel7:1.0.6
+registry.redhat.io/openshift-service-mesh/kiali-rhel7-operator:1.0.7
+registry.redhat.io/openshift-service-mesh/kiali-rhel7:1.0.7
 registry.redhat.io/openshift-service-mesh/istio-rhel8-operator:1.0.1
 registry.redhat.io/openshift4/ose-oauth-proxy:4.1
 registry.redhat.io/openshift4/ose-oauth-proxy:latest
