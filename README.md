@@ -17,21 +17,56 @@ $ oc patch OperatorHub cluster --type json \
 
 ```
 
-## Create an Operator catalog image
+## Pre build setup
 
 ```
-mkdir manifets
-./build-operator-catalog.sh 
+mkdir manifests ; for f in *.tar.gz; do tar -C manifests/ -xvf $f ; done && rm -rf *tar.gz
 
 ```
 
-## Push the Operator catalog image to a registry. 
+## Create an Operator catalog image and push it to registry
 
 ```
-oc create -f internal-operatorhub-catalog.yaml
+export REGISTRY="YOUR_REGISTRY_URL"
+
+podman build --no-cache -f Dockerfile \
+    -t ${REGISTRY}/openshift-marketplace/mirrored-operator-catalog
+
+podman push ${REGISTRY}/openshift-marketplace/mirrored-operator-catalog
+
+OR
+
+./build-operator-catalog.sh YOUR_REGISTRY_URL
+
+```
+
+### Create CatalogSource
+
+```
+echo "apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: internal-mirrored-operatorhub-catalog
+  namespace: openshift-marketplace
+spec:
+  displayName: My Mirrored Operator Catalog
+  sourceType: grpc
+  image: ${REGISTRY}/openshift-marketplace/mirrored-operator-catalog
+" > internal-mirrored-operatorhub-catalog.yaml
+
+```
+## Apply the CatalogSource
+
+```
+oc create -f internal-mirrored-operatorhub-catalog.yaml
+```
+
+## Check status
+
+```
 oc get pods -n openshift-marketplace
 oc get catalogsource -n openshift-marketplace
-oc get packagemanifest -n openshift-marketplace
+oc describe catalogsource internal-mirrored-operatorhub-catalog -n openshift-marketplace
 
 ```
 

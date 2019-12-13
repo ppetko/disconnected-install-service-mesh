@@ -1,9 +1,0 @@
-apiVersion: operators.coreos.com/v1alpha1
-kind: CatalogSource
-metadata:
-  name: internal-mirrored-operator-catalog
-  namespace: openshift-marketplace
-spec:
-  displayName: My Mirrored Operator Catalog
-  sourceType: grpc
-  image: <local_registry_host_name>:<local_registry_host_port>/<namespace>/custom-registry:latest
