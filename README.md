@@ -41,6 +41,7 @@ OR
 ```
 
 ### Create CatalogSource
+* Replace ${REGISTRY} with YOUR_REGISTRY_URL
 
 ```
 echo "apiVersion: operators.coreos.com/v1alpha1
