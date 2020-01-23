@@ -40,6 +40,43 @@ OR
 
 ```
 
+### Modify /etc/containers/registries.conf and set mirror-by-digest-only = false
+
+```
+cat sample-registries.conf | base64
+
+```
+
+### Replace ${YOUR_FILE_CONTENT_IN_BASE64} with the output of the previous command
+
+```
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  annotations:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 50-worker-container-registry-conf
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,${YOUR_FILE_CONTENT_IN_BASE64}
+          verification: {}
+        filesystem: root
+        mode: 420
+        path: /etc/containers/registries.conf
+```
+
+### Then, apply the config file 
+
+```
+oc apply -f sample-registries.conf
+```
+
 ### Create CatalogSource
 * Replace ${REGISTRY} with YOUR_REGISTRY_URL
 
